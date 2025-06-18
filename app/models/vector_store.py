@@ -1,6 +1,6 @@
 import chromadb
 from langchain.vectorstores import Chroma
-from langchain_huggingface.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 
 class VectorStore:
     def __init__(self, path):

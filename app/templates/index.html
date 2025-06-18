@@ -4,74 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Diagnostics Support Application</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="../static/style.css">
+    <style></style>
 </head>
 <body>
     <div class="container">
-        <h1>Medical Diagnostics Support Application</h1>
+        <div class="header">
+            <h1>Medical Diagnostics Support</h1>
+            <p>Advanced AI-powered document analysis and diagnostic assistance</p>
+        </div>
         
-        <div class="upload-section">
-            <h2>Upload Documents</h2>
-            <form id="upload-form">
-                <input type="file" id="file-input" multiple>
-                <button type="submit">Upload</button>
-            </form>
-        </div>
+        <div class="main-content">
+            <div class="section upload-section">
+                <h2>
+                    <span class="icon">📄</span>
+                    Upload Documents
+                </h2>
+                
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">
+                        <strong>Click to upload</strong> or drag and drop files here
+                    </div>
+                    <div style="font-size: 0.9rem; color: #95a5a6;">
+                        Supports PDF, DOC, DOCX, TXT files
+                    </div>
+                    <input type="file" id="file-input" class="file-input" multiple accept=".pdf,.doc,.docx,.txt">
+                </div>
+                
+                <div class="file-list" id="file-list" style="display: none;"></div>
+                
+                <button class="btn" id="upload-btn" style="width: 100%; margin-top: 20px;" disabled>
+                    Upload Documents
+                </button>
+                
+                <div id="upload-message"></div>
+            </div>
 
-        <div class="query-section">
-            <h2>Ask Questions</h2>
-            <textarea id="question-input" placeholder="Enter your question..."></textarea>
-            <button id="submit-question">Ask</button>
-        </div>
+            <div class="section query-section">
+                <h2>
+                    <span class="icon">❓</span>
+                    Ask Questions
+                </h2>
+                
+                <textarea 
+                    id="question-input" 
+                    class="question-area"
+                    placeholder="Enter your medical question or describe the symptoms you'd like to analyze..."
+                    maxlength="2000"
+                ></textarea>
+                
+                <div class="question-controls">
+                    <span class="char-count" id="char-count">0 / 2000</span>
+                    <button class="btn" id="submit-question">
+                        Ask Question
+                    </button>
+                </div>
+            </div>
 
-        <div class="response-section">
-            <h2>Response</h2>
-            <div id="response-content"></div>
+            <div class="section response-section">
+                <h2>
+                    <span class="icon">💡</span>
+                    AI Response
+                </h2>
+                <div class="response-content" id="response-content"></div>
+            </div>
         </div>
     </div>
 
-    <script>
-        document.getElementById('upload-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData();
-            const files = document.getElementById('file-input').files;
-            
-            for (let file of files) {
-                formData.append('file', file);
-            }
-
-            try {
-                const response = await fetch('/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-                const result = await response.json();
-                alert(result.message || result.error);
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error uploading files');
-            }
-        });
-
-        document.getElementById('submit-question').addEventListener('click', async () => {
-            const question = document.getElementById('question-input').value;
-            
-            try {
-                const response = await fetch('/query', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ question })
-                });
-                const result = await response.json();
-                document.getElementById('response-content').textContent = 
-                    result.response || result.error;
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error getting response');
-            }
-        });
-    </script>
+    <script src="../static/script.js"></script>
 </body>
 </html>

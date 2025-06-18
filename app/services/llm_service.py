@@ -1,14 +1,14 @@
-from euriai.langchain_llm import EuriaiLangChainLLM
+from langchain_groq import ChatGroq
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from config import Config
 
 class LLMService:
     def __init__(self, vector_store):
-        self.llm = EuriaiLangChainLLM(
+        self.llm = ChatGroq(
             temperature=0.7,
-            model="gpt-4.1-nano",
-            api_key = Config.EURIAI_API_KEY
+            model="meta-llama/llama-4-maverick-17b-128e-instruct",
+            api_key = Config.GROQ_API_KEY
         )
         self.memory = ConversationBufferMemory(
             memory_key="chat_history",
